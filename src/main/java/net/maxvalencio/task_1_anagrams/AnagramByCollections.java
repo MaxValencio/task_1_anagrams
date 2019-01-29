@@ -11,37 +11,35 @@ public class AnagramByCollections implements Anagram {
 	
 	@Override
 	public String createAnagram(String text) {
-		List<String> words = new ArrayList<>(Arrays.asList(text.split(" "))); // break the text into words 
-		text = "";
-		for(int i = 0; i < words.size(); i++) {
-			if(!(words.get(i).equals(""))) {
-				text += anagramOfWord(words.get(i)) + ( i == words.size() - 1 ? "" : " ");
-			}
-		}
-		return text;
+		List<String> data = Arrays.asList(text.split("\\s+")); 
+		StringBuilder anagramBuilder = new StringBuilder();
+		for(int i = 0; i < data.size(); i++) {
+				anagramBuilder.append(getAnagram(data.get(i))).append(" ");
+		}	
+		return anagramBuilder.toString().trim();
 	}
 
-	private String anagramOfWord(String word) {
-		char[] charArray = word.toCharArray();	//break the word into symbols
-		List<Character> list = new ArrayList<>(); 
+	private StringBuilder getAnagram(String word) {
+		char[] chars = word.toCharArray();	
+		List<Character> characters = new ArrayList<>(); 
 		Map<Integer, Character> nonLettersHolder = new LinkedHashMap<>();
 		//sort symbols: letters and non-letters
-		for(int i = 0; i < charArray.length; i++) {
-			if(Character.isLetter(charArray[i])) {
-				list.add(charArray[i]);
+		for(int i = 0; i < chars.length; i++) {
+			if(Character.isLetter(chars[i])) {
+				characters.add(chars[i]);
 			} else {
-				nonLettersHolder.put(i, charArray[i]);
+				nonLettersHolder.put(i, chars[i]);
 			}
 		}
-		Collections.reverse(list); // get the anagram without non-letter symbols
+		Collections.reverse(characters); // get the anagram without non-letter symbols
 		for(Map.Entry<Integer, Character> entry : nonLettersHolder.entrySet()) {
-				list.add(entry.getKey(), entry.getValue());	// add non-letters symbols in anagram
+				characters.add(entry.getKey(), entry.getValue());	// add non-letters symbols in anagram
 		}	
-		word ="";
-		for( Character character : list) {
-			word += character; 
+		StringBuilder stringBuilder = new StringBuilder();
+		for( Character character : characters) {
+			stringBuilder.append(character); 
 		}
-		return word;
+		return stringBuilder;
 	}
 }
 
