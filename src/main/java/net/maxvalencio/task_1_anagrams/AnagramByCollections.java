@@ -10,36 +10,53 @@ import java.util.Map;
 public class AnagramByCollections implements Anagram {
 	
 	@Override
-	public String createAnagram(String text) {
-		List<String> data = Arrays.asList(text.split("\\s+")); 
-		StringBuilder anagramBuilder = new StringBuilder();
+	public String createAnagram(String str) {
+		List<String> data = Arrays.asList(str.split("\\s+")); 
+		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < data.size(); i++) {
-				anagramBuilder.append(getAnagram(data.get(i))).append(" ");
+				sb.append(getSingleAnagram(data.get(i))).append(" ");
 		}	
-		return anagramBuilder.toString().trim();
+		String totalAnagram = sb.toString().trim();
+		return totalAnagram;
 	}
 
-	private StringBuilder getAnagram(String word) {
-		char[] chars = word.toCharArray();	
-		List<Character> characters = new ArrayList<>(); 
-		Map<Integer, Character> nonLettersHolder = new LinkedHashMap<>();
-		//sort symbols: letters and non-letters
-		for(int i = 0; i < chars.length; i++) {
-			if(Character.isLetter(chars[i])) {
-				characters.add(chars[i]);
-			} else {
-				nonLettersHolder.put(i, chars[i]);
+	private String getSingleAnagram(String str) {
+		char[] chars = str.toCharArray();	
+		List<Character> anagramHolder = addToAnagram(getLetters(chars), getNonLetters(chars));
+		StringBuilder sb = new StringBuilder();
+		for( Character character : anagramHolder) {
+			sb.append(character); 
+		}
+		String singleAnagram = sb.toString();
+		return singleAnagram;
+	}
+	
+	private List<Character> getLetters(char[] ch) {
+		List<Character> letters = new ArrayList<>(); 
+		for(int i = 0; i < ch.length; i++) {
+			if(Character.isLetter(ch[i])) {
+				letters.add(ch[i]);
+			}
+		}return letters;
+	}
+	
+	private Map<Integer, Character> getNonLetters(char[]ch){
+		Map<Integer, Character> nonLetters = new LinkedHashMap<>();
+		for(int i = 0; i < ch.length; i++) {
+			if(!Character.isLetter(ch[i])) {
+				nonLetters.put(i, ch[i]);
 			}
 		}
-		Collections.reverse(characters); // get the anagram without non-letter symbols
-		for(Map.Entry<Integer, Character> entry : nonLettersHolder.entrySet()) {
-				characters.add(entry.getKey(), entry.getValue());	// add non-letters symbols in anagram
-		}	
-		StringBuilder stringBuilder = new StringBuilder();
-		for( Character character : characters) {
-			stringBuilder.append(character); 
+		return nonLetters;
+	}
+	
+	private List<Character> addToAnagram(List<Character> letters, Map<Integer, Character> nonLetters) {
+		Collections.reverse(letters);
+		List<Character> anagram = new ArrayList<>();
+		anagram.addAll(letters);
+		for(Map.Entry<Integer, Character> entry : nonLetters.entrySet()) {
+			anagram.add(entry.getKey(), entry.getValue());	// add non-letters symbols in anagram
 		}
-		return stringBuilder;
+		return anagram;
 	}
 }
-
