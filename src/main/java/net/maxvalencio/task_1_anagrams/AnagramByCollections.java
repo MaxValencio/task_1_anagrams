@@ -16,8 +16,8 @@ public class AnagramByCollections implements Anagram {
 		for(int i = 0; i < data.size(); i++) {
 				sb.append(createWordAnagram(data.get(i))).append(" ");
 		}	
-		String totalAnagram = sb.toString().trim();
-		return totalAnagram;
+		String anagram = sb.toString().trim();
+		return anagram;
 	}
 
 	private String createWordAnagram(String str) {
