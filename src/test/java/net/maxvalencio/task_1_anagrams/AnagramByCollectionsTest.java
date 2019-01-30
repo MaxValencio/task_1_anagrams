@@ -34,6 +34,5 @@ public class AnagramByCollectionsTest {
 		AnagramByCollections anagramByCollections = new AnagramByCollections();
 		String s = anagramByCollections.createAnagram("  1                      1");
     	assertEquals("1 1", s);
-    }
-	
+    }	
 }
