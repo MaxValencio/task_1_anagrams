@@ -15,7 +15,7 @@ public class AnagramImpl implements Anagram {
 	private StringBuilder createWordAnagram(String word) {		
 		StringBuilder anagram = new StringBuilder(); 
 		anagram.append(createLettersAnagram(word));
-		insertNonLettersOfWordToAnagram(word, anagram);
+		insertNonLettersToAnagram(word, anagram);
 		return anagram;	
 	}	
 	
@@ -30,9 +30,9 @@ public class AnagramImpl implements Anagram {
 		return lettersAnagram.reverse();
 	}
 	
-	private StringBuilder insertNonLettersOfWordToAnagram(String word, StringBuilder anagram){
+	private StringBuilder insertNonLettersToAnagram(String word, StringBuilder anagram){
 		char[] wordChars = word.toCharArray();
-		for(int i= 0; i < wordChars.length; i++) {
+		for(int i = 0; i < wordChars.length; i++) {
 			if(!Character.isLetter(wordChars[i])) {
 				anagram.insert(i, wordChars[i]);
 			}
