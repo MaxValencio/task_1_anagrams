@@ -1,48 +1,42 @@
 package net.maxvalencio.task_1_anagrams;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 public class AnagramImpl implements Anagram {
 	
 	@Override
-	public String createAnagram(String line) {
-		List<String> words = Arrays.asList(line.split("\\s+")); 
-		StringBuilder anagramBuilder = new StringBuilder();
+	public String createAnagram(String text) {
+		String[] words = text.split("\\s+"); 
+		StringBuilder result = new StringBuilder();
 		for(String word : words) {
-			anagramBuilder.append(createWordAnagram(word)).append(" ");
+			result.append(createWordAnagram(word)).append(" ");
 		}	
-		return anagramBuilder.toString().trim();
+		return result.toString().trim();
 	}
 
-	private String createWordAnagram(String word) {		
-		StringBuilder wordAnagamBuilder = new StringBuilder(); 
-		wordAnagamBuilder.append(createLettersAnagram(word));
-		for(Map.Entry<Integer, Character> entry : createNonLetters(word).entrySet()) {
-			wordAnagamBuilder.insert((int)entry.getKey(),(char)entry.getValue());
-		}
-		return wordAnagamBuilder.toString();	
+	private StringBuilder createWordAnagram(String word) {		
+		StringBuilder anagram = new StringBuilder(); 
+		anagram.append(createLettersAnagram(word));
+		insertNonLettersOfWordToAnagram(word, anagram);
+		return anagram;	
 	}	
 	
-	private String createLettersAnagram(String word) {
-		StringBuilder lettersAnagramBuilder = new StringBuilder();
-		for(Character character : word.toCharArray()) {
-			if(Character.isLetter(character)) {
-				lettersAnagramBuilder.append(character);
+	private StringBuilder createLettersAnagram(String word) {
+		StringBuilder lettersAnagram = new StringBuilder();
+		char[] wordChars = word.toCharArray();
+		for(Character currentCharacter : wordChars) {
+			if(Character.isLetter(currentCharacter)) {
+				lettersAnagram.append(currentCharacter);
 			}
 		}
-		return lettersAnagramBuilder.reverse().toString();
+		return lettersAnagram.reverse();
 	}
 	
-	private Map<Integer, Character> createNonLetters(String word){
-		Map<Integer, Character> nonLetters = new LinkedHashMap<>();
-		for(int i = 0; i < word.toCharArray().length; i++) {
-			if(!Character.isLetter(word.toCharArray()[i])) {
-				nonLetters.put(i, word.toCharArray()[i]);
+	private StringBuilder insertNonLettersOfWordToAnagram(String word, StringBuilder anagram){
+		char[] wordChars = word.toCharArray();
+		for(int i= 0; i < wordChars.length; i++) {
+			if(!Character.isLetter(wordChars[i])) {
+				anagram.insert(i, wordChars[i]);
 			}
 		}
-		return nonLetters;
+		return anagram;
 	}
 }
