@@ -4,12 +4,16 @@ public class AnagramImpl implements Anagram {
 	
 	@Override
 	public String createAnagram(String text) {
-		String[] words = text.split("\\s+"); 
-		StringBuilder result = new StringBuilder();
-		for(String word : words) {
-			result.append(createWordAnagram(word)).append(" ");
-		}	
+		if(text == null) {
+			return "";
+		} else {
+			String[] words = text.split("\\s+"); 
+			StringBuilder result = new StringBuilder();
+			for(String word : words) {
+				result.append(createWordAnagram(word)).append(" ");
+			}	
 		return result.toString().trim();
+		}
 	}
 
 	private StringBuilder createWordAnagram(String word) {		
