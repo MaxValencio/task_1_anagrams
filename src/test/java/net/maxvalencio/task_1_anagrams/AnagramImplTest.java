@@ -18,7 +18,7 @@ public class AnagramImplTest {
 	}
 
 	@Test
-	public void createAnagram_onlyNonLeter_correct() throws Exception {
+	public void createAnagram_onlyNonLetters_correct() throws Exception {
 		String actual = anagram.createAnagram("24234231");
 		String expected = "24234231";
 		assertEquals(expected, actual);
